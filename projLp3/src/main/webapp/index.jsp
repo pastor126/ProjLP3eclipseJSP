@@ -18,6 +18,7 @@
 <body>
 	<!-- Compondo página com a barra de navegação -->
 	<jsp:include page="/publica/publica-nav.jsp" />
+	
 	<div class="container">
 		<div class="row">
 			<div class="row">
