@@ -16,6 +16,8 @@
 	src="${pageContext.request.contextPath}/resources/bootstrap-5.1.3-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
+	<!-- Compondo página com a barra de navegação -->
+	<jsp:include page="/publica/publica-nav.jsp" />
 	<div class="container">
 		<div class="row">
 			<div class="row">
