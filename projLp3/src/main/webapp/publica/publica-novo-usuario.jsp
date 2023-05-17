@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-    
-    
+	pageEncoding="ISO-8859-1"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,76 +22,85 @@
 <body>
 	<!-- Compondo página com a barra de navegação -->
 	<jsp:include page="/publica/publica-nav.jsp" />
-	
-		<div class="container">
+
+	<div class="container">
 		<div class="row">
 			<div class="row">
-				<h1>Cadastro de Usuário</h1>
-					<div class="container">
-		<div class="row">
-			<div class="col">
-				<h2>Cadastro usuário</h2>
-				
-				<c:if test="${mensagem != null}">
-				 	<div class="alert alert-success alert-dismissible fade show">
-					<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-					<span><c:out value="${mensagem}" /></span>
+
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<h2>
+								<fmt:message key="publica-novo-usuario.titulo" />
+							</h2>
+
+							<c:if test="${mensagem != null}">
+								<div class="alert alert-success alert-dismissible fade show">
+									<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+									<span><c:out value="${mensagem}" /></span>
+								</div>
+							</c:if>
+
+							<form
+								action="${pageContext.request.contextPath}/publica?acao=inserir"
+								method="post">
+
+								<div class="row mb-3">
+									<label class="col-sm-1 col-form-label"><fmt:message
+											key="publica-novo-usuario.nome" /></label>
+									<div class="col-sm-5">
+										<input class="form-control" type="text" name="nome">
+									</div>
+								</div>
+
+								<div class="row mb-3">
+									<label class="col-sm-1 col-form-label"><fmt:message
+											key="publica-novo-usuario.cpf" /></label>
+									<div class="col-sm-3">
+										<input class="form-control" type="text" name="cpf">
+									</div>
+								</div>
+
+
+								<div class="row mb-3">
+									<label class="col-sm-1 col-form-label"><fmt:message
+											key="publica-novo-usuario.nascimento" /></label>
+									<div class="col-sm-2">
+										<input class="form-control" type="text" name="nascimento">
+									</div>
+								</div>
+
+
+								<div class="row mb-3">
+									<label class="col-sm-1 col-form-label"><fmt:message
+											key="publica-novo-usuario.email" /></label>
+									<div class="col-sm-2">
+										<input class="form-control" type="text" name="email">
+									</div>
+								</div>
+
+								<div class="row mb-3">
+									<label class="col-sm-1 col-form-label"><fmt:message
+											key="publica-novo-usuario.login" /></label>
+									<div class="col-sm-2">
+										<input class="form-control" type="text" name="login">
+									</div>
+								</div>
+
+								<div class="row mb-3">
+									<label class="col-sm-1 col-form-label"><fmt:message
+											key="publica-novo-usuario.senha" /></label>
+									<div class="col-sm-2">
+										<input class="form-control" type="password" name="password">
+									</div>
+								</div>
+
+								<input class="btn btn-primary" type="submit" value="<fmt:message
+											key="publica-novo-usuario.botao.registrar" />" />
+							</form>
+						</div>
+					</div>
 				</div>
-				</c:if>
-				
-				<form
-					action="${pageContext.request.contextPath}/publica?acao=inserir"
-					method="post">
-
-					<div class="row mb-3">
-						<label class="col-sm-1 col-form-label">Nome</label>
-						<div class="col-sm-5">
-							<input class="form-control" type="text" name="nome">
-						</div>
-					</div>
-
-					<div class="row mb-3">
-						<label class="col-sm-1 col-form-label">CPF</label>
-						<div class="col-sm-3">
-							<input class="form-control" type="text" name="cpf">
-						</div>
-					</div>
-
-
-					<div class="row mb-3">
-						<label class="col-sm-1 col-form-label">Nascimento</label>
-						<div class="col-sm-2">
-							<input class="form-control" type="text" name="nascimento">
-						</div>
-					</div>
-
-
-					<div class="row mb-3">
-						<label class="col-sm-1 col-form-label">Email</label>
-						<div class="col-sm-2">
-							<input class="form-control" type="text" name="email">
-						</div>
-					</div>
-
-					<div class="row mb-3">
-						<label class="col-sm-1 col-form-label">Login</label>
-						<div class="col-sm-2">
-							<input class="form-control" type="text" name="login">
-						</div>
-					</div>
-
-					<div class="row mb-3">
-						<label class="col-sm-1 col-form-label">Senha</label>
-						<div class="col-sm-2">
-							<input class="form-control" type="password" name="password">
-						</div>
-					</div>
-
-					<input class="btn btn-primary" type="submit" value="Gravar" />
-				</form>
-			</div>
-		</div>
-	</div>
 			</div>
 		</div>
 	</div>

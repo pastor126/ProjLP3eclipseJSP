@@ -55,6 +55,7 @@ public class AdminControle extends HttpServlet {
 			
 			case "apagar":
 				excluirUsu(request, response);
+				break;
 			}
 			
 			

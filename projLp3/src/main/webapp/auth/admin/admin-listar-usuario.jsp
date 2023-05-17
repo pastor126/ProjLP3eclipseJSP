@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Usuários</title>
+<title><fmt:message key="admin-listar-usuario.lista" /></title>
 
 
 <link
@@ -30,17 +30,17 @@
 			
 			<div class="col">
 				<h2>
-					Usuários
+					<fmt:message key="admin-listar-usuario.lista" />
 				</h2>
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th>Id</th>
-							<th>Nome</th>
-							<th>Cpf</th>
-							<th>Nascimento</th>
-							<th>E-mail</th>
-							<th>Ativado?</th>
+							<th><fmt:message key="admin-listar-usuario.id" /></th>
+							<th><fmt:message key="publica-novo-usuario.nome" /></th>
+							<th><fmt:message key="publica-novo-usuario.cpf" /></th>
+							<th><fmt:message key="publica-novo-usuario.nascimento" /></th>
+							<th><fmt:message key="publica-novo-usuario.email" /></th>
+							<th><fmt:message key="admin-listar-usuario.ativado" /></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -51,15 +51,21 @@
 								<td><c:out value="${usuario.nome}" /></td>
 								<td><c:out value="${usuario.cpf}" /></td>
 								<td>
-									<fmt:formatDate value='${usuario.dataNascimento}'
-										type='date' pattern='dd/MM/yyyy' />
+									<fmt:formatDate value='${usuario.dataNascimento}' type='date' pattern='dd/MM/yyyy' />
 								</td>
 								<td><c:out value="${usuario.email}" /></td>
-
-								<td><c:out value= "${usuario.ativo=='true' ? 'ATIVO' : 'NÃO ATIVO'}" /></td>								
-								 
-								<td><a class="btn btn-outline-danger btn-sm" onclick="return confirm('Deseja mesmo apagar?');" 
-								href="${pageContext.request.contextPath}/auth/admin?acao=apagar&id=<c:out value="${usuario.id}"/>">Excluir</a></td>
+								<td>
+								<c:choose>
+								<c:when test="${usuario.ativo=='true'}">
+								<span><fmt:message key="admin-listar-usuario.ativo"/> </span>
+								</c:when>
+								<c:otherwise>
+								<span><fmt:message key="admin-listar-usuario.naoativo"/> </span>
+								</c:otherwise>
+								</c:choose>
+								</td>
+								<td><a class="btn btn-outline-danger btn-sm" onclick="return confirm('<fmt:message key="admin-listar-usuario.confirmacaoapagar" />');" 
+								href="${pageContext.request.contextPath}/auth/admin?acao=apagar&id=<c:out value="${usuario.id}"/>"><fmt:message key="admin-listar-usuario.botaoapagar" /></a></td>
 								
 							</tr>
 							

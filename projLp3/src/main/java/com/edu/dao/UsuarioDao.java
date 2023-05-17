@@ -70,8 +70,7 @@ public class UsuarioDao {
 			while (resultSet.next()) {
 				long id = resultSet.getLong("id"); //1
 				String nome = resultSet.getString("nome");
-				String cpf = resultSet.getString("cpf");
-				
+				String cpf = resultSet.getString("cpf");		
 				Date nascimento = new Date(resultSet.getDate("data_nascimento").getTime());
 				String email = resultSet.getString("email");
 				String password = resultSet.getString("password");

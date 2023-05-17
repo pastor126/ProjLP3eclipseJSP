@@ -1,6 +1,7 @@
 package com.edu.modelo;
 
 import java.util.Date;
+import java.util.List;
 
 public class Usuario {
 	
@@ -11,6 +12,15 @@ public class Usuario {
 	private String email;		
 	private String password;		
 	private String login;	
+	private List<Papel> papeis;
+	
+	
+	public List<Papel> getPapeis() {
+		return papeis;
+	}
+	public void setPapeis(List<Papel> papeis) {
+		this.papeis = papeis;
+	}
 	private boolean ativo;
 		
 	

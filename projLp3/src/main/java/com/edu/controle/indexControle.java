@@ -1,9 +1,11 @@
 package com.edu.controle;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,10 +13,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.jstl.core.Config;
 
+import com.edu.controle.i18n.I18nUtil;
+import com.edu.controle.seguranca.Criptografia;
 import com.edu.controle.util.ManipulaData;
+import com.edu.dao.PapelDAO;
 import com.edu.dao.UsuarioDao;
 import com.edu.dao.util.Conexao;
+import com.edu.modelo.Papel;
 import com.edu.modelo.Usuario;
 
 /**
@@ -26,6 +33,7 @@ public class indexControle extends HttpServlet {
        
 
     private UsuarioDao usuarioDAO;
+    private PapelDAO papelDAO;
 
 	public indexControle() {
 		super();
@@ -33,7 +41,9 @@ public class indexControle extends HttpServlet {
 
 	public void init() {
 		usuarioDAO = new UsuarioDao();
+		papelDAO = new PapelDAO();
 	}
+	
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -82,7 +92,7 @@ public class indexControle extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 	
-	private void gravarUsuario(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException {
+	private void gravarUsuario(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException, NoSuchAlgorithmException {
 		String nome= request.getParameter("nome");
 		String cpf= request.getParameter("cpf");
 		String email= request.getParameter("email");
@@ -93,12 +103,26 @@ public class indexControle extends HttpServlet {
 		ManipulaData manipulaData = new ManipulaData();
 		Date dataNascimento = manipulaData.converterStringData(data);
 		
-		Usuario usuario = new Usuario(nome, cpf, dataNascimento, email, password, login, false);
+		String senhaCriptografada = Criptografia.converterParaMD5(password);
+		
+		Usuario usuario = new Usuario(nome, cpf, dataNascimento, email, senhaCriptografada, login, false);
 		
 		Usuario usuarioGravado = usuarioDAO.inserirUsuario(usuario);
+		Papel papel = papelDAO.buscarPapelPorTipo("USER");
+		papelDAO.atribuirPapelUsuario(papel, usuarioGravado);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("publica/publica-novo-usuario.jsp");
-		request.setAttribute("mensagem", "Usuário cadastrado com sucesso");
+		Locale locale = (Locale) Config.get(request.getSession(), Config.FMT_LOCALE);
+		if (locale == null) {
+			locale = new Locale("pt", "BR");
+		}
+		
+		I18nUtil i18nUtil = new I18nUtil();
+		String texto = i18nUtil.getMensagem(locale, "publica-novo-usuario.mensagem");
+		
+		
+		request.setAttribute("mensagem", texto);
+		
 		dispatcher.forward(request, response);
 	}
 	
