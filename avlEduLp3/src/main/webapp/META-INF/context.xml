@@ -6,5 +6,5 @@
 		type="javax.sql.DataSource" minIdle="20" maxIdle="100"
 		maxWait="30000" username="postgres" password="sodnamoc"
 		driverClassName="org.postgresql.Driver"
-		url="jdbc:postgresql://localhost:5432/avlEduLp3" />
+		url="jdbc:postgresql://localhost:5432/avl1eduLp3" />
 </Context>

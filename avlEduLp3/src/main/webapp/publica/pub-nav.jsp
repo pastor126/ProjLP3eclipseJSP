@@ -12,6 +12,10 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/pub?acao=novo">Cadastro</a>
         </li>
+        
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/pub?acao=listar">Motos</a>
+        </li>
      
       </ul>
     </div>
