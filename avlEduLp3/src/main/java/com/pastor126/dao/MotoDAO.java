@@ -55,7 +55,7 @@ public class MotoDAO {
 
 		public List<Moto> listarMoto()throws SQLException{
 			List<Moto> listamotos = new ArrayList<Moto>();
-			String sql = "SELECT * FROM moto";
+			String sql = "SELECT * FROM moto ORDER BY marca, modelo";
 			conectar();
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(sql);
@@ -79,5 +79,81 @@ public class MotoDAO {
 		}
 		
 
+		
+		
+		
+		public void apagarMoto(Moto moto)throws SQLException{
+			
+			String sql = "DELETE FROM moto WHERE id = ?";		
+			conectar();
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setLong(1, moto.getId());
+		
+			statement.close();
+			desconectar();
+		}
+	
+		public Moto buscarMotoPorId(long id)throws SQLException{
+			Moto moto = null;
+			String sql = "SELECT * FROM moto WHERE id = ?";
+			conectar();
+			PreparedStatement statement = connection.prepareStatement(sql);
+	        statement.setLong(1, id);
+	        ResultSet resultSet = statement.executeQuery();
+			
+			if (resultSet.next()) {
+				
+				String marca = resultSet.getString("marca");
+				String modelo = resultSet.getString("modelo");		
+				String cor = resultSet.getString("cor");
+		
+				moto = new Moto(id, marca, modelo, cor);
+				  
+			   
+			}
+			resultSet.close();
+			statement.close();
+
+			desconectar();
+
+			return moto;
+		}
+		
+		public boolean editaMoto(Moto moto) throws SQLException {
+			String sql = "UPDATE moto SET marca = ?, modelo = ?, cor = ?"
+					+ " WHERE id = ?";		    
+			
+			conectar();
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, moto.getMarca());
+			statement.setString(2, moto.getModelo());
+			statement.setString(3, moto.getCor());
+			statement.setLong(4, moto.getId());
+			
+			boolean editado  = statement.executeUpdate() > 0;
+			statement.close();
+
+			desconectar();
+			return editado;
+		}
+
+		
+
+		
+		public boolean excluirMoto(Moto moto)throws SQLException{
+			
+			String sql = "DELETE FROM moto WHERE id = ?";		
+			conectar();
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setLong(1, moto.getId());
+			boolean excluido = statement.executeUpdate() > 0;
+			statement.close();
+			desconectar();
+			return excluido;
+		}
+
+
+		
 	
 }

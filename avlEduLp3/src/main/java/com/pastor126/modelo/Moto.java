@@ -12,6 +12,19 @@ public class Moto {
 			super();
 			// TODO Auto-generated constructor stub
 		}
+		
+		
+		
+		public Moto(Long id, String marca, String modelo, String cor) {
+			super();
+			this.id = id;
+			this.marca = marca;
+			this.modelo = modelo;
+			this.cor = cor;
+		}
+
+
+
 		public Moto(String marca, String modelo,  String cor) {
 			super();
 			this.marca = marca;
@@ -39,7 +52,7 @@ public class Moto {
 		public String getCor() {
 			return cor;
 		}
-		public void setcor(String cor) {
+		public void setCor(String cor) {
 			this.cor = cor;
 		}
 		

@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.pastor126.dao.MotoDAO;
 import com.pastor126.dao.util.Conexao;
 import com.pastor126.modelo.Moto;
@@ -55,6 +56,18 @@ public class centralControle extends HttpServlet {
 			listarMoto(request, response);
 			break;
 
+		case "editar":
+			editarMoto(request, response);
+			break;
+			
+		case "update":
+			edicao(request, response);
+			break;
+			
+			
+		case "excluir":
+			excluirMoto(request, response);
+			break;	
 			
 			}
 		}catch(Exception ex) {
@@ -63,6 +76,7 @@ public class centralControle extends HttpServlet {
 		
 	}
 		
+
 	private void novaMoto (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection conexaoJDBC = Conexao.getConexao();
 	
@@ -101,5 +115,57 @@ public class centralControle extends HttpServlet {
 	}
 	
 	
+	
+	private void editarMoto (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		Moto moto = motoDAO.buscarMotoPorId(id);
+		request.setAttribute("moto", moto);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("publica/editar-moto.jsp");		
+		dispatcher.forward(request, response);
+	}
 
+	
+	private void edicao(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+		Long id = Long.parseLong(request.getParameter("id"));
+		String marca= request.getParameter("marca");
+		String modelo= request.getParameter("modelo");
+		String cor= request.getParameter("cor");
+		
+		Moto moto = new Moto(id, marca, modelo, cor);
+		
+		motoDAO.editaMoto(moto);
+		List<Moto> motos = motoDAO.listarMoto();
+		
+		request.setAttribute("listarMoto", motos);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("publica/listar-moto.jsp");
+		request.setAttribute("mensagem", "Alterações Salva");
+		dispatcher.forward(request, response);
+	}
+		
+
+	
+
+	
+	private void excluirMoto(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException {
+
+		long id = Long.parseLong(request.getParameter("id"));
+
+		Moto moto = new Moto();
+		moto.setId(id);
+		motoDAO.excluirMoto(moto);
+		String path = request.getContextPath() + request.getServletPath() + "?acao=listar";
+
+		response.sendRedirect(path);
+	}
+
+
+	
+	
+
+
+	
+	
+	
+	
+	
 }
