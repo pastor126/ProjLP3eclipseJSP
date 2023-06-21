@@ -17,9 +17,7 @@
         <div class="row">
             <h1>Cadastrar Moto</h1>
         </div>
-        <div>
-            <a class="btn btn-primary" href="${pageContext.request.contextPath}/pub?acao=listar">Motos</a>
-        </div>
+      
         <div class="row">
             <div class="col">
                 <c:if test="${mensagem != null}">
@@ -54,7 +52,7 @@
 
 
 					
-					<input class="btn btn-primary" type="submit" value="Gravar" />
+					<input class="btn btn-success" type="submit" value="Cadastrar" />
 				</form>
 				
 			</div>
